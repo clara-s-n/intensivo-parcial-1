@@ -19,6 +19,13 @@ class UsuarioRepository extends BaseRepository<Usuario> {
     if (res.rowCount === 0) throw new UCUNoEncontradoError("id_usuario " + id);
     return res.rows[0];
   }
+  
+  async getRoleById(id: number): Promise<Usuario> {
+    let consulta = `SELECT roles FROM users WHERE id_usuario=$1`;
+    const res = await myPool.query(consulta,[id]);
+    if (res.rowCount === 0) throw new UCUNoEncontradoError("id_usuario " + id);
+    return res.rows[0];
+  }
 
   async getOneBy(data: Partial<Usuario>): Promise<Usuario> {
     let consulta = `${this.baseQuery}
