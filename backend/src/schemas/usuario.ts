@@ -23,6 +23,12 @@ export const Login = Type.Object({
 
 export type Login = Static<typeof Login>;
 
+export const UsuarioParams = Type.Object({
+  id_usuario: Type.Integer()},
+  { examples: [{id_usuario: 2}]})
+
+export type UsuarioParams = typeof UsuarioParams;
+
 export const Usuario = Type.Object({
   id_usuario: Type.Optional(Type.Integer()),
   nombre : Type.String(),

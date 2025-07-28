@@ -52,7 +52,11 @@ class UsuarioRepository extends BaseRepository<Usuario> {
   }
 
   async update(id: string, data: Partial<Usuario>): Promise<Usuario> {
-    throw new Error('Not implemented')
+    const consulta = `UPDATE usuarios (nombre) VALUES ($2) WHERE id_usuario=$1 RETURNING *`;
+    const res = await myPool.query(consulta,[data.nombre]);
+    const id_usuario = res.rows[0].id_usuario;
+    console.log({id_usuario});
+    return this.getById(id_usuario);
   }
 
   async erase(id: number): Promise<void> {

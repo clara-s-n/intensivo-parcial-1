@@ -8,6 +8,12 @@ export const Localidad = Type.Object({
 });
 export type Localidad = Static<typeof Localidad>;
 
+export const LocalidadParams = Type.Object({
+  id_localidad: Type.Integer(),
+});
+
+export type LocalidadParams = Static<typeof LocalidadParams>
+
 export const LocalidadUsuario = Type.Object({
   id_localidad: Type.Integer(),
   id_departamento: Type.Integer(),

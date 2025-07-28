@@ -1,4 +1,9 @@
-import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox';
+import { FastifyPluginAsyncTypebox, Type } from '@fastify/type-provider-typebox';
+import {Usuario, UsuarioParams} from "../../../schemas/usuario.js";
+import {usuarioRepository} from "../../../services/usuario.repository.js";
+import {Departamento, DepartamentoParams} from '../../../schemas/departamento.js';
+import {LocalidadParams, LocalidadUsuario} from "../../../schemas/localidad.js";
+
 
 const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => {
 
@@ -9,11 +14,16 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       description : "Obtener el usuario a partir de su id",
       security: [
         { bearerAuth: [] }
-      ]
+      ],
+      params: UsuarioParams,
+      response: {
+        200: Usuario
+      }
     },
     onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const {id_usuario} = request.params as unknown as UsuarioParams;
+      return await usuarioRepository.getById(id_usuario);
     }
   })
 
@@ -24,11 +34,16 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       description : "Obtener departamentos del usuario",
       security: [
         { bearerAuth: [] }
-      ]
+      ],
+      response: {
+        200: Type.Array(Departamento)
+      },
+      params: UsuarioParams,
     },
     onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const {id_usuario} = request.params as unknown as UsuarioParams;
+      return await usuarioRepository.getDepartamentos(id_usuario);
     }
   })
   
@@ -39,11 +54,14 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       description : "Obtener las localidades de un determinado departamento del usuario",
       security: [
         { bearerAuth: [] }
-      ]
+      ],
+      params: Type.Intersect([UsuarioParams,DepartamentoParams]),
     },
     onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const {id_usuario} = request.params as unknown as UsuarioParams;
+      const {id_departamento} = request.params as DepartamentoParams;
+      return await usuarioRepository.getLocalidades(id_usuario, id_departamento);
     }
   })
   
@@ -51,14 +69,17 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
     schema: {
       tags: ["usuarios"],
       summary: "Crear Localidad",
+      params: Type.Intersect([UsuarioParams,DepartamentoParams]),
+      body: LocalidadUsuario,
       description : "Crear una localidad asignada a un usuario.",
       security: [
         { bearerAuth: [] }
-      ]
+      ],
     },
     onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const localidad = request.body as LocalidadUsuario;
+      return await usuarioRepository.addLocalidad(localidad)
     }
   })
 
@@ -67,16 +88,20 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       tags: ["usuarios"],
       summary: "Borrar localidad",
       description : "Borrar localidad.",
+      params: Type.Intersect([UsuarioParams,DepartamentoParams, LocalidadParams]),
       security: [
         { bearerAuth: [] }
       ]
     },
     onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
-      throw new Error("No implementado");
+      const {id_usuario} = request.params as unknown as UsuarioParams;
+      const {id_departamento} = request.params as DepartamentoParams;
+      const {id_localidad} = request.params as LocalidadParams;
+      await usuarioRepository.removeLocalidad(id_usuario, id_departamento, id_localidad);
     }
   })
 
 }
 
-export default usuariosRoutes
+export default usuariosRoutes;
