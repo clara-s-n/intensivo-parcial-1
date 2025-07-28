@@ -21,7 +21,7 @@ class UsuarioRepository extends BaseRepository<Usuario> {
   }
   
   async getRoleById(id: number): Promise<Usuario> {
-    let consulta = `SELECT roles FROM users WHERE id_usuario=$1`;
+    let consulta = `SELECT roles FROM public.usuarios WHERE id_usuario=$1`;
     const res = await myPool.query(consulta,[id]);
     if (res.rowCount === 0) throw new UCUNoEncontradoError("id_usuario " + id);
     return res.rows[0];
@@ -44,7 +44,7 @@ class UsuarioRepository extends BaseRepository<Usuario> {
   }
 
   async create(data: Usuario): Promise<Usuario> {
-    const consulta = "INSERT INTO usuarios (nombre, roles, password_hash) VALUES ($1, $2, crypt('contraseña', gen_salt('bf'))) RETURNING *";
+    const consulta = "INSERT INTO usuarios (nombre, roles) VALUES ($1, $2) RETURNING *";
     const res = await myPool.query(consulta,[data.nombre,data.roles]);
     const id_usuario = res.rows[0].id_usuario;
     console.log({id_usuario});

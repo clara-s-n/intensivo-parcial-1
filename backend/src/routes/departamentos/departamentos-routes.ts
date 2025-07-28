@@ -14,6 +14,7 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
       return departamentoRepository.getAll();
     }
@@ -32,6 +33,7 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }
@@ -46,6 +48,7 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }

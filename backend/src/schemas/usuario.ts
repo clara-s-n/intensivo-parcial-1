@@ -27,8 +27,18 @@ export const Usuario = Type.Object({
   id_usuario: Type.Optional(Type.Integer()),
   nombre : Type.String(),
   roles :Type.Array(Type.String())
+}, {
+  examples : [
+  {
+    id_usuario: "2",
+    nombre: "Ejemplo",
+    roles: ['user']
+  }
+  ]
 });
+
 export type Usuario = Static<typeof Usuario>;
+
 
 //Si quiero agregar los esquemas a fastify de antemano para poder usar ref.
 export default fp(async (fastify) => {

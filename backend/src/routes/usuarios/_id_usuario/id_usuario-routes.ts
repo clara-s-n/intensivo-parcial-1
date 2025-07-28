@@ -11,6 +11,7 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }
@@ -25,6 +26,7 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }
@@ -39,6 +41,7 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }
@@ -53,6 +56,7 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }
@@ -67,6 +71,7 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
         { bearerAuth: [] }
       ]
     },
+    onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
       throw new Error("No implementado");
     }

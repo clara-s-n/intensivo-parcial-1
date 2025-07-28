@@ -17,7 +17,7 @@ const auth: FastifyPluginAsyncTypebox = async (fastify, opts): Promise<void> => 
         { bearerAuth: [] }
       ]
     },
-    // onRequest: [fastify.authenticate],
+    onRequest: [fastify.authenticate],
     handler: async function (request, reply) {
       return request.user;  //
     }
