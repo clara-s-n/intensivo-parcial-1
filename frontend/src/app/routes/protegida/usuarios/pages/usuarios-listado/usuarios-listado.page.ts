@@ -1,14 +1,15 @@
-import { JsonPipe } from '@angular/common';
 import { Component, inject, OnDestroy, OnInit, resource } from '@angular/core';
 import { User } from 'src/app/model/user';
 import { UsuariosService } from 'src/app/services/usuarios.service';
 import { environment } from 'src/environments/environment';
+import {IonButton, IonItem, IonLabel, IonList} from "@ionic/angular/standalone";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-usuarios-listado',
   templateUrl: './usuarios-listado.page.html',
   styleUrls: ['./usuarios-listado.page.scss'],
-  imports : [JsonPipe],
+  imports: [ IonList, IonItem, IonLabel, IonButton, RouterLink],
 })
 export class UsuariosListadoPage  implements OnInit, OnDestroy {
 
@@ -20,7 +21,7 @@ export class UsuariosListadoPage  implements OnInit, OnDestroy {
   });
 
   constructor() { }
-  
+
 
   async ngOnInit() {
     this.socket = new WebSocket(environment.apiUrl);

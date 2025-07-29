@@ -1,6 +1,15 @@
 <p>
   @if (this.usuariosSignal.hasValue()) {
-    {{ this.usuariosSignal.value() | json }}
+    <ion-list>
+      @for(user of usuariosSignal.value(); track user.id_usuario) {
+        <ion-item>
+          <ion-label>Nombre: {{ user.nombre }} </ion-label>
+          <ion-label>Id: {{ user.id_usuario }} </ion-label>
+          <ion-label>Roles: {{ user.roles }} </ion-label>
+          <ion-button slot="end" fill="clear" [routerLink]="['/protegida/usuarios/usuarios-localidades', user.id_usuario]">Ver Localidades</ion-button>
+        </ion-item>
+      }
+    </ion-list>
   }
   @else {
     No hay usuarios
