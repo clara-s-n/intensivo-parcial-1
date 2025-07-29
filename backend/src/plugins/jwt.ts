@@ -39,12 +39,12 @@ const jwtPlugin = fp<FastifyJWTOptions>(async (fastify) => {
   fastify.decorate('isAdminOrSelf', async function (request:FastifyRequest , reply:FastifyReply) {
     try{
       await request.jwtVerify();
-      let { id } = request.params as { id: string };
+      const { id_usuario: userId } = request.params as { id_usuario: number };
       const { id_usuario } = request.user as { id_usuario: number };
       const rows  = await usuarioRepository.getRoleById(id_usuario);
       const roles = rows.roles[0];
-      if (roles !== 'admin' || id_usuario === Number(id)) {
-        reply.code(401).send({ error: `Unauthorized, you must be an admin and you are ${roles}` });
+      if (roles !== 'admin' || id_usuario === userId) {
+        reply.code(401).send({ error: `Unauthorized, you must be an admin and you are ${roles}, your id: ${id_usuario}, params: ${userId}` });
       }
     } catch (err) {
       reply.code(401).send({error: 'Unauthorized'})

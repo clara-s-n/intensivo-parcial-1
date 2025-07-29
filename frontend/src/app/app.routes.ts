@@ -74,7 +74,7 @@ export const routes: Routes = [
               import('./routes/protegida/localidades/pages/localidades-list/localidades-list.page').then((m) => m.LocalidadesListPage),
           },
           {
-            path: 'profile/:id',
+            path: 'profile/:id_usuario',
             pathMatch:'full',
             loadComponent: () =>
               import('./routes/protegida/usuarios/pages/usuarios-profile/usuario-profile/usuario-profile.page').then((m) => m.UsuarioProfilePage),
