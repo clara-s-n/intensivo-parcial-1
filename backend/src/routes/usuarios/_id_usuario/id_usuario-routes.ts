@@ -56,6 +56,9 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
         { bearerAuth: [] }
       ],
       params: Type.Intersect([UsuarioParams,DepartamentoParams]),
+      response: {
+        200: Type.Array(LocalidadUsuario),
+      },
     },
     onRequest: fastify.isAdminOrSelf,
     handler: async function (request, reply) {
@@ -75,6 +78,12 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       security: [
         { bearerAuth: [] }
       ],
+      response: {
+        204: {
+          type: 'object',
+          message: 'no content',
+        }
+      },
     },
     onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
@@ -91,14 +100,20 @@ const usuariosRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Promise
       params: Type.Intersect([UsuarioParams,DepartamentoParams, LocalidadParams]),
       security: [
         { bearerAuth: [] }
-      ]
+      ],
+      response: {
+        204: {
+          type: 'object',
+          message: 'no content',
+        }
+      },
     },
     onRequest: fastify.isAdmin,
     handler: async function (request, reply) {
       const {id_usuario} = request.params as unknown as UsuarioParams;
       const {id_departamento} = request.params as DepartamentoParams;
       const {id_localidad} = request.params as LocalidadParams;
-      await usuarioRepository.removeLocalidad(id_usuario, id_departamento, id_localidad);
+      return await usuarioRepository.removeLocalidad(id_usuario, id_departamento, id_localidad);
     }
   })
 

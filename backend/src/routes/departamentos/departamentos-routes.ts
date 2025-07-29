@@ -58,8 +58,9 @@ const departamentoRoutes: FastifyPluginAsyncTypebox = async (fastify, opts): Pro
       },
       onRequest: fastify.isAdmin,
       handler: async function (request, reply) {
-        2
-        return await departamentoRepository.getLocalidades(id_departamento);
+        const {id_departamento} = request.params as DepartamentoParams;
+        const objects = await departamentoRepository.getLocalidades(id_departamento);
+        return objects.map((item) => item.nombre)
       },
     })
 }
