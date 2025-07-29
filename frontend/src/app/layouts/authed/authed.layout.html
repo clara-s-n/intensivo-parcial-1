@@ -9,7 +9,12 @@
         <ion-button routerLink="/home">Ir a Home</ion-button>
         <ion-button routerLink="/protegida">Ir a Protegida</ion-button>
         <ion-button routerLink="/protegida/usuarios">Ir a Usuarios</ion-button>
-        <ion-button routerLink="/protegida/usuarios/crear">Crear Usuario</ion-button>
+        <ion-button [routerLink]="['/protegida/usuarios/profile', this.usuario_id]" >Perfil</ion-button>
+        <ion-button [routerLink]="['/protegida/usuarios/usuarios-localidades', this.usuario_id]" >Usuarios Localidades</ion-button>
+        <ion-button [routerLink]="['/protegida/usuarios/localidades-list']" >Lista de localidades</ion-button>
+
+        <ion-button [routerLink]="['/protegida/usuarios/modificar', this.usuario_id]" >Modificar Usuario</ion-button>
+        <ion-button (click)="this.doLogout()">Logout</ion-button>
       </ion-menu-toggle>
     </ion-content>
   </ion-menu>
@@ -22,7 +27,7 @@
         <ion-title>Menu</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content> 
+    <ion-content>
         <ion-router-outlet  id="authed-child-layout"></ion-router-outlet>
     </ion-content>
   </div>

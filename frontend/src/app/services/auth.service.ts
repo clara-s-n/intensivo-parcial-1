@@ -37,7 +37,7 @@ export class AuthService {
         "Authorization" : "Bearer " + token
       }}));
       this.mainStore.usuario.set(usuario);
-      
+
       console.log("Token valido: ",{usuario});
       this.router.navigate(["/protegida"]);
     }catch(error){
@@ -45,5 +45,11 @@ export class AuthService {
       this.mainStore.token.set(undefined)
       this.mainStore.usuario.set(undefined)
     }
+  }
+
+  public async logout (){
+    this.mainStore.token.set(undefined)
+    this.mainStore.usuario.set(undefined)
+    localStorage.clear();
   }
 }
